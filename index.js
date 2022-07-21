@@ -2,7 +2,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const util = require('util');
-const markdown = require('./utils/generateMarkdown');
+const generateMarkdown = require('./utils/generateMarkdown');
 
 // writeFile function using promises instead of a callback function
 const writeFileAsync = util.promisify(fs.writeFile);
@@ -82,22 +82,22 @@ const questions = [
 ];
 
 //  function to write README file
-function writeToFile(fileName, data) {
+/*function writeToFile(fileName, data) {
     fs.writeFile(fileName, data, err => {
         if (err) {
             return console.log(err);
         }
         console.log("Generating README...")
     });
-}
+}*/
 
 // function to initialize app
 function init() {
     inquirer.prompt(questions)
         .then((response) => {
-            let readmeContent = markdown.generateMarkdown(response)
+            let readmeContent = generateMarkdown(response)
             console.log(response);
-            writeToFile('README.md', readmeContent)
+            writeFileAsync('./new/README.md', readmeContent)
         }
         )
 }
